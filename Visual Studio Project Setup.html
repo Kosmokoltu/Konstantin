@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTUS C# - Visual Studio Setup</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        
+        .section h3 {
+            color: #333;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        
+        .code-block {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            line-height: 1.5;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .file-tree {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+        
+        .file-tree .folder {
+            color: #ce9178;
+        }
+        
+        .file-tree .file {
+            color: #d4d4d4;
+        }
+        
+        .file-tree .csproj {
+            color: #4ec9b0;
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .instructions strong {
+            color: #1976D2;
+        }
+        
+        ol, ul {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #ddd;
+        }
+        
+        .btn-secondary:hover {
+            background: #efefef;
+            transform: translateY(-2px);
+        }
+        
+        .checklist {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .checklist ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .copy-section {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        textarea {
+            width: 100%;
+            height: 250px;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+        
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        
+        .alert {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📁 OTUS C# Basic - Visual Studio Setup</h1>
+            <p>Готовая структура проекта для домашнего задания</p>
+        </div>
+        
+        <div class="content">
+            <!-- Структура проекта -->
+            <div class="section">
+                <h2>🗂️ Структура проекта</h2>
+                <div class="file-tree">
+OTUS-CSharp-Basic-Homework/
+├── src/
+│   └── ToDoApp/
+│       ├── <span class="csproj">ToDoApp.csproj</span>
+│       ├── <span class="file">Program.cs</span>
+│       ├── <span class="folder">Exceptions/</span>
+│       │   ├── <span class="file">TaskCountLimitException.cs</span>
+│       │   ├── <span class="file">TaskLengthLimitException.cs</span>
+│       │   └── <span class="file">DuplicateTaskException.cs</span>
+│       └── <span class="folder">Models/</span>
+│           ├── <span class="file">ToDoItemState.cs</span>
+│           ├── <span class="file">ToDoUser.cs</span>
+│           └── <span class="file">ToDoItem.cs</span>
+├── <span class="file">.gitignore</span>
+└── <span class="file">README.md</span>
+                </div>
+            </div>
+            
+            <!-- Инструкция для Visual Studio -->
+            <div class="section">
+                <h2>🚀 Способ 1: Создание через Visual Studio (рекомендуется)</h2>
+                <ol>
+                    <li>Открой <strong>Visual Studio 2022</strong></li>
+                    <li>Нажми <strong>"Create a new project"</strong></li>
+                    <li>Выбери <strong>"Console App"</strong> (C# .NET 6.0 или выше)</li>
+                    <li>Нажми <strong>"Next"</strong></li>
+                    <li>Введи название проекта: <strong>ToDoApp</strong></li>
+                    <li>Выбери путь: любая папка (Visual Studio создаст структуру автоматически)</li>
+                    <li>Нажми <strong>"Create"</strong></li>
+                    <li>Когда проект откроется, создай папки:
+                        <ul>
+                            <li>Кликни правой кнопкой на проект → <strong>Add</strong> → <strong>New Folder</strong> → <strong>Models</strong></li>
+                            <li>Повтори для папки <strong>Exceptions</strong></li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+            
+            <!-- Инструкция для командной строки -->
+            <div class="section">
+                <h2>🖥️ Способ 2: Создание через командную строку</h2>
+                <div class="code-block">
+# Создай корневую папку проекта
+mkdir OTUS-CSharp-Basic-Homework
+cd OTUS-CSharp-Basic-Homework
+
+# Создай папку src
+mkdir src
+cd src
+
+# Создай новый Console проект
+dotnet new console -n ToDoApp
+cd ToDoApp
+
+# Создай папки для классов
+mkdir Models
+mkdir Exceptions
+
+# Открой в Visual Studio (из папки src/ToDoApp)
+start .
+# Или вручную откри папку в Visual Studio
+                </div>
+            </div>
+            
+            <!-- ToDoApp.csproj -->
+            <div class="section">
+                <h2>📝 Файл ToDoApp.csproj</h2>
+                <p>Скопируй это в файл <strong>src/ToDoApp/ToDoApp.csproj</strong>:</p>
+                <div class="copy-section">
+                    <div class="code-block">
+&lt;Project Sdk="Microsoft.NET.Sdk"&gt;
+
+  &lt;PropertyGroup&gt;
+    &lt;OutputType&gt;Exe&lt;/OutputType&gt;
+    &lt;TargetFramework&gt;net6.0&lt;/TargetFramework&gt;
+    &lt;LangVersion&gt;latest&lt;/LangVersion&gt;
+    &lt;Nullable&gt;enable&lt;/Nullable&gt;
+  &lt;/PropertyGroup&gt;
+
+&lt;/Project&gt;
+                    </div>
+                    <button class="copy-btn" onclick="copyCode('.csproj-code')">📋 Копировать код</button>
+                </div>
+            </div>
+            
+            <!-- Файлы классов -->
+            <div class="section">
+                <h2>📦 Файлы для копирования</h2>
+                
+                <h3>1. Exceptions/TaskCountLimitException.cs</h3>
+                <div class="code-block">
+public class TaskCountLimitException : Exception
+{
+    public TaskCountLimitException(int taskCountLimit)
+        : base($"Превышено максимальное количество задач равное {taskCountLimit}") { }
+}
+                </div>
+                
+                <h3>2. Exceptions/TaskLengthLimitException.cs</h3>
+                <div class="code-block">
+public class TaskLengthLimitException : Exception
+{
+    public TaskLengthLimitException(int taskLength, int taskLengthLimit)
+        : base($"Длина задачи '{taskLength}' превышает максимально допустимое значение {taskLengthLimit}") { }
+}
+                </div>
+                
+                <h3>3. Exceptions/DuplicateTaskException.cs</h3>
+                <div class="code-block">
+public class DuplicateTaskException : Exception
+{
+    public DuplicateTaskException(string task)
+        : base($"Задача '{task}' уже существует") { }
+}
+                </div>
+                
+                <h3>4. Models/ToDoItemState.cs</h3>
+                <div class="code-block">
+public enum ToDoItemState
+{
+    Active,
+    Completed
+}
+                </div>
+                
+                <h3>5. Models/ToDoUser.cs</h3>
+                <div class="code-block">
+public class ToDoUser
+{
+    public Guid UserId { get; }
+    public string TelegramUserName { get; }
+    public DateTime RegisteredAt { get; }
+
+    public ToDoUser(string telegramUserName)
+    {
+        if (string.IsNullOrWhiteSpace(telegramUserName))
+            throw new ArgumentException("Имя пользователя не должно быть пустым.");
+
+        UserId = Guid.NewGuid();
+        TelegramUserName = telegramUserName;
+        RegisteredAt = DateTime.UtcNow;
+    }
+}
+                </div>
+                
+                <h3>6. Models/ToDoItem.cs</h3>
+                <div class="code-block">
+public class ToDoItem
+{
+    public Guid Id { get; }
+    public ToDoUser User { get; }
+    public string Name { get; }
+    public DateTime CreatedAt { get; }
+    public ToDoItemState State { get; private set; }
+    public DateTime? StateChangedAt { get; private set; }
+
+    public ToDoItem(ToDoUser user, string name)
+    {
+        if (user == null)
+            throw new ArgumentNullException(nameof(user));
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Имя задачи не должно быть пустым.");
+
+        Id = Guid.NewGuid();
+        User = user;
+        Name = name;
+        CreatedAt = DateTime.UtcNow;
+        State = ToDoItemState.Active;
+        StateChangedAt = null;
+    }
+
+    public void Complete()
+    {
+        if (State == ToDoItemState.Completed)
+            return;
+
+        State = ToDoItemState.Completed;
+        StateChangedAt = DateTime.UtcNow;
+    }
+}
+                </div>
+            </div>
+            
+            <!-- Program.cs -->
+            <div class="section">
+                <h2>⚙️ Program.cs (Основной файл)</h2>
+                <p>Скопируй полный код ниже в файл <strong>src/ToDoApp/Program.cs</strong>:</p>
+                <div class="copy-section">
+                    <textarea id="programCs">using System;
+using System.Collections.Generic;
+using System.Linq;
+
+// Пользовательские исключения
+public class TaskCountLimitException : Exception
+{
+    public TaskCountLimitException(int taskCountLimit)
+        : base($"Превышено максимальное количество задач равное {taskCountLimit}") { }
+}
+
+public class TaskLengthLimitException : Exception
+{
+    public TaskLengthLimitException(int taskLength, int taskLengthLimit)
+        : base($"Длина задачи '{taskLength}' превышает максимально допустимое значение {taskLengthLimit}") { }
+}
+
+public class DuplicateTaskException : Exception
+{
+    public DuplicateTaskException(string task)
+        : base($"Задача '{task}' уже существует") { }
+}
+
+// Модели
+public enum ToDoItemState
+{
+    Active,
+    Completed
+}
+
+public class ToDoUser
+{
+    public Guid UserId { get; }
+    public string TelegramUserName { get; }
+    public DateTime RegisteredAt { get; }
+
+    public ToDoUser(string telegramUserName)
+    {
+        if (string.IsNullOrWhiteSpace(telegramUserName))
+            throw new ArgumentException("Имя пользователя не должно быть пустым.");
+
+        UserId = Guid.NewGuid();
+        TelegramUserName = telegramUserName;
+        RegisteredAt = DateTime.UtcNow;
+    }
+}
+
+public class ToDoItem
+{
+    public Guid Id { get; }
+    public ToDoUser User { get; }
+    public string Name { get; }
+    public DateTime CreatedAt { get; }
+    public ToDoItemState State { get; private set; }
+    public DateTime? StateChangedAt { get; private set; }
+
+    public ToDoItem(ToDoUser user, string name)
+    {
+        if (user == null)
+            throw new ArgumentNullException(nameof(user));
+
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Имя задачи не должно быть пустым.");
+
+        Id = Guid.NewGuid();
+        User = user;
+        Name = name;
+        CreatedAt = DateTime.UtcNow;
+        State = ToDoItemState.Active;
+        StateChangedAt = null;
+    }
+
+    public void Complete()
+    {
+        if (State == ToDoItemState.Completed)
+            return;
+
+        State = ToDoItemState.Completed;
+        StateChangedAt = DateTime.UtcNow;
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        try
+        {
+            Console.Write("Введите максимально допустимое количество задач (1-100): ");
+            int taskLimit = ParseAndValidateInt(Console.ReadLine(), 1, 100);
+
+            Console.Write("Введите максимально допустимую длину задачи (1-100): ");
+            int taskLengthLimit = ParseAndValidateInt(Console.ReadLine(), 1, 100);
+
+            Run(taskLimit, taskLengthLimit);
+        }
+        catch (TaskCountLimitException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (TaskLengthLimitException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (DuplicateTaskException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (ArgumentException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Произошла непредвиденная ошибка:");
+            Console.WriteLine($"Type: {ex.GetType().FullName}");
+            Console.WriteLine($"Message: {ex.Message}");
+            Console.WriteLine($"StackTrace: {ex.StackTrace}");
+            Console.WriteLine($"InnerException: {ex.InnerException}");
+        }
+    }
+
+    static void Run(int taskLimit, int taskLengthLimit)
+    {
+        ToDoUser? user = null;
+        bool isRunning = true;
+        string version = "1.0";
+        string creationDate = "19.11.2025";
+        List<ToDoItem> tasks = new List<ToDoItem>();
+
+        Console.WriteLine("Добро пожаловать в меню хоккейного одевалкина!");
+        Console.WriteLine("Доступные команды: /start, /help, /info, /echo, /addtask, /showtasks, /showalltasks, /removetask, /completetask, /exit");
+
+        while (isRunning)
+        {
+            Console.Write("> ");
+            var input = Console.ReadLine();
+
+            if (input == null)
+            {
+                Console.WriteLine("Пустой ввод. Введите /help для списка команд.");
+                continue;
+            }
+
+            if (input.StartsWith("/start"))
+                HandleStart(ref user);
+            else if (input.StartsWith("/help"))
+                HandleHelp();
+            else if (input.StartsWith("/info"))
+                HandleInfo(version, creationDate);
+            else if (input.StartsWith("/echo"))
+                HandleEcho(input, user);
+            else if (input.StartsWith("/addtask"))
+            {
+                try
+                {
+                    HandleAddTask(tasks, taskLimit, taskLengthLimit, user);
+                }
+                catch (TaskCountLimitException ex) { Console.WriteLine(ex.Message); }
+                catch (TaskLengthLimitException ex) { Console.WriteLine(ex.Message); }
+                catch (DuplicateTaskException ex) { Console.WriteLine(ex.Message); }
+                catch (ArgumentException ex) { Console.WriteLine(ex.Message); }
+            }
+            else if (input.StartsWith("/showtasks"))
+                HandleShowTasks(tasks);
+            else if (input.StartsWith("/showalltasks"))
+                HandleShowAllTasks(tasks);
+            else if (input.StartsWith("/removetask"))
+            {
+                try { HandleRemoveTask(tasks); }
+                catch (ArgumentException ex) { Console.WriteLine(ex.Message); }
+            }
+            else if (input.StartsWith("/completetask"))
+                HandleCompleteTask(input, tasks);
+            else if (input.StartsWith("/exit"))
+            {
+                Console.WriteLine("Программа завершена.");
+                isRunning = false;
+            }
+            else
+                Console.WriteLine("Неизвестная команда. Введите /help для списка команд.");
+        }
+    }
+
+    static int ParseAndValidateInt(string? str, int min, int max)
+    {
+        if (!int.TryParse(str, out int value))
+            throw new ArgumentException("Ожидается целое число.");
+
+        if (value < min || value > max)
+            throw new ArgumentException($"Число должно быть в диапазоне от {min} до {max}.");
+
+        return value;
+    }
+
+    static void ValidateString(string? str)
+    {
+        if (string.IsNullOrWhiteSpace(str))
+            throw new ArgumentException("Строка не должна быть пустой и состоять только из пробелов.");
+    }
+
+    static void HandleStart(ref ToDoUser? user)
+    {
+        Console.Write("Пожалуйста, введите своё имя: ");
+        string? name = Console.ReadLine();
+        ValidateString(name);
+        user = new ToDoUser(name!);
+        Console.WriteLine($"Здравствуйте, {user.TelegramUserName}! Теперь доступна команда /echo.");
+    }
+
+    static void HandleHelp()
+    {
+        Console.WriteLine("Справка:");
+        Console.WriteLine("/start - начать работу и ввести имя");
+        Console.WriteLine("/help - показать это сообщение");
+        Console.WriteLine("/info - информация о программе");
+        Console.WriteLine("/echo <текст> - повторить введённый текст (доступно после /start)");
+        Console.WriteLine("/addtask - добавить новую задачу в список");
+        Console.WriteLine("/showtasks - показать все активные задачи");
+        Console.WriteLine("/showalltasks - показать все задачи с любым статусом");
+        Console.WriteLine("/removetask - удалить задачу по номеру");
+        Console.WriteLine("/completetask <Id> - отметить задачу как выполненную по Id");
+        Console.WriteLine("/exit - выйти из программы");
+    }
+
+    static void HandleInfo(string version, string creationDate)
+    {
+        Console.WriteLine($"Версия программы: {version}");
+        Console.WriteLine($"Дата создания: {creationDate}");
+    }
+
+    static void HandleEcho(string input, ToDoUser? user)
+    {
+        if (user != null)
+        {
+            string message = input.Length > 6 ? input.Substring(6) : "";
+            Console.WriteLine($"{user.TelegramUserName}, ваш текст: {message}");
+        }
+        else
+            Console.WriteLine("Сначала введите команду /start и имя.");
+    }
+
+    static void HandleAddTask(List<ToDoItem> tasks, int taskLimit, int taskLengthLimit, ToDoUser? user)
+    {
+        if (user == null)
+        {
+            Console.WriteLine("Сначала введите команду /start и имя.");
+            return;
+        }
+
+        Console.Write("Введите описание задачи: ");
+        string? taskName = Console.ReadLine();
+
+        ValidateString(taskName);
+
+        if (tasks.Count >= taskLimit)
+            throw new TaskCountLimitException(taskLimit);
+
+        if (taskName!.Length > taskLengthLimit)
+            throw new TaskLengthLimitException(taskName.Length, taskLengthLimit);
+
+        if (tasks.Exists(t => t.Name == taskName && t.User.UserId == user.UserId))
+            throw new DuplicateTaskException(taskName);
+
+        var item = new ToDoItem(user, taskName);
+        tasks.Add(item);
+        Console.WriteLine($"Задача добавлена. Id: {item.Id}");
+    }
+
+    static void HandleShowTasks(List<ToDoItem> tasks)
+    {
+        var activeTasks = tasks.Where(t => t.State == ToDoItemState.Active).ToList();
+
+        if (activeTasks.Count == 0)
+            Console.WriteLine("Список активных задач пуст.");
+        else
+        {
+            Console.WriteLine("Список активных задач:");
+            for (int i = 0; i < activeTasks.Count; i++)
+            {
+                var t = activeTasks[i];
+                Console.WriteLine($"{i + 1}. {t.Name} - {t.CreatedAt:dd.MM.yyyy HH:mm:ss} - {t.Id}");
+            }
+        }
+    }
+
+    static void HandleShowAllTasks(List<ToDoItem> tasks)
+    {
+        if (tasks.Count == 0)
+            Console.WriteLine("Список задач пуст.");
+        else
+        {
+            Console.WriteLine("Все задачи:");
+            for (int i = 0; i < tasks.Count; i++)
+            {
+                var t = tasks[i];
+                Console.WriteLine($"{i + 1}. ({t.State}) {t.Name} - {t.CreatedAt:dd.MM.yyyy HH:mm:ss} - {t.Id}");
+            }
+        }
+    }
+
+    static void HandleRemoveTask(List<ToDoItem> tasks)
+    {
+        if (tasks.Count == 0)
+        {
+            Console.WriteLine("Список задач пуст, удалять нечего.");
+            return;
+        }
+
+        Console.WriteLine("Текущие задачи:");
+        for (int i = 0; i < tasks.Count; i++)
+        {
+            var t = tasks[i];
+            Console.WriteLine($"{i + 1}. ({t.State}) {t.Name} - {t.CreatedAt:dd.MM.yyyy HH:mm:ss} - {t.Id}");
+        }
+
+        Console.Write("Введите номер задачи для удаления: ");
+        string? indexInput = Console.ReadLine();
+        int index = ParseAndValidateInt(indexInput, 1, tasks.Count);
+
+        tasks.RemoveAt(index - 1);
+        Console.WriteLine("Задача удалена.");
+    }
+
+    static void HandleCompleteTask(string input, List<ToDoItem> tasks)
+    {
+        var parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        if (parts.Length < 2)
+        {
+            Console.WriteLine("Нужно передать Id задачи. Пример: /completetask 73c7940a-ca8c-4327-8a15-9119bffd1d5e");
+            return;
+        }
+
+        if (!Guid.TryParse(parts[1], out Guid id))
+        {
+            Console.WriteLine("Некорректный формат Id.");
+            return;
+        }
+
+        var task = tasks.FirstOrDefault(t => t.Id == id);
+        if (task == null)
+        {
+            Console.WriteLine("Задача с таким Id не найдена.");
+            return;
+        }
+
+        task.Complete();
+        Console.WriteLine("Задача отмечена как выполненная.");
+    }
+}
+                    </textarea>
+                    <button class="copy-btn" onclick="copyText('programCs')">📋 Копировать Program.cs</button>
+                </div>
+            </div>
+            
+            <!-- .gitignore -->
+            <div class="section">
+                <h2>.gitignore</h2>
+                <p>Скопируй это в файл <strong>.gitignore</strong> в корне проекта:</p>
+                <div class="copy-section">
+                    <textarea id="gitignore">## Ignore Visual Studio temporary files, build results
+bin/
+obj/
+.vs/
+
+## User-specific files
+*.user
+*.suo
+*.cache
+*.csproj.user
+
+## VS Code
+.vscode/
+
+## macOS
+.DS_Store
+
+## Rider
+.idea/
+*.sln.iml
+                    </textarea>
+                    <button class="copy-btn" onclick="copyText('gitignore')">📋 Копировать .gitignore</button>
+                </div>
+            </div>
+            
+            <!-- README.md -->
+            <div class="section">
+                <h2>README.md</h2>
+                <p>Скопируй это в файл <strong>README.md</strong> в корне проекта:</p>
+                <div class="copy-section">
+                    <textarea id="readme"># OTUS C# Basic - ToDo List Application
+
+Console application for task management with user support.
+
+## ✨ Features
+- ✅ User registration (ToDoUser class with Guid, TelegramUserName, RegisteredAt)
+- ✅ Create, complete, and delete tasks (ToDoItem class with state tracking)
+- ✅ Task filtering by state (Active/Completed)
+- ✅ Task limit validation (1-100 configurable)
+- ✅ Task length validation (1-100 characters configurable)
+- ✅ Duplicate task prevention per user
+- ✅ Telegram bot template support
+
+## 📁 Project Structure
+src/
+└── ToDoApp/
+    ├── Program.cs
+    ├── Models/
+    │   ├── ToDoUser.cs
+    │   ├── ToDoItem.cs
+    │   └── ToDoItemState.cs
+    └── Exceptions/
+        ├── TaskCountLimitException.cs
+        ├── TaskLengthLimitException.cs
+        └── DuplicateTaskException.cs
+
+## 📋 Requirements
+- .NET 6.0 or higher
+- Visual Studio 2022 or Visual Studio Code
+- C# 10+
+
+## 🚀 Build & Run
+cd src/ToDoApp
+dotnet build
+dotnet run
+
+## 💻 Commands
+
+| Command | Description | Example |
+|---------|-------------|---------|
+| `/start` | Register user with username | `/start` |
+| `/help` | Show all available commands | `/help` |
+| `/info` | Show app version and date | `/info` |
+| `/echo <text>` | Echo text (requires /start) | `/echo Hello` |
+| `/addtask` | Add new task | `/addtask` |
+| `/showtasks` | Show only active tasks | `/showtasks` |
+| `/showalltasks` | Show all tasks with state | `/showalltasks` |
+| `/removetask` | Remove task by number | `/removetask` |
+| `/completetask <Id>` | Mark task as completed | `/completetask 123e4567-e89b-12d3-a456-426614174000` |
+| `/exit` | Exit application | `/exit` |
+
+## ✔️ Validation Rules
+- **Maximum tasks**: Set on startup (1-100)
+- **Maximum task length**: Set on startup (1-100 characters)
+- **Duplicate tasks**: Not allowed per user
+- **Task names**: Cannot be empty or whitespace only
+- **User names**: Cannot be empty or whitespace only
+
+## 📖 Example Usage
+> /start
+Пожалуйста, введите своё имя: John
+Здравствуйте, John! Теперь доступна команда /echo.
+
+> /addtask
+Введите описание задачи: Buy groceries
+Задача добавлена. Id: 17056344-0e03-4a21-b0dd-f0d30a5abf49
+
+> /showtasks
+Список активных задач:
+1. Buy groceries - 15.01.2026 21:40:30 - 17056344-0e03-4a21-b0dd-f0d30a5abf49
+
+> /completetask 17056344-0e03-4a21-b0dd-f0d30a5abf49
+Задача отмечена как выполненная.
+
+> /showalltasks
+Все задачи:
+1. (Completed) Buy groceries - 15.01.2026 21:40:30 - 17056344-0e03-4a21-b0dd-f0d30a5abf49
+
+## 👤 Author
+Your Name
+
+## 🎓 Course
+OTUS C# Developer. Basic
+
+## 📝 License
+Educational Project
+                    </textarea>
+                    <button class="copy-btn" onclick="copyText('readme')">📋 Копировать README.md</button>
+                </div>
+            </div>
+            
+            <!-- Чек-лист -->
+            <div class="section">
+                <h2>✅ Финальный чек-лист перед отправкой</h2>
+                <div class="checklist">
+                    <ul>
+                        <li>Созданы все папки (Models, Exceptions)</li>
+                        <li>Созданы все 6 файлов классов</li>
+                        <li>Program.cs содержит полный код</li>
+                        <li>ToDoApp.csproj с правильной конфигурацией</li>
+                        <li>Проект компилируется: <code>dotnet build</code></li>
+                        <li>Приложение запускается: <code>dotnet run</code></li>
+                        <li>Все команды работают правильно</li>
+                        <li>Создан .gitignore файл</li>
+                        <li>Создан README.md</li>
+                        <li>Код отправлен на GitHub или как архив</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Финальная инструкция -->
+            <div class="section">
+                <h2>📤 Отправка на проверку</h2>
+                <div class="instructions">
+                    <strong>Вариант 1: GitHub (рекомендуется)</strong><br>
+                    Загрузи проект на GitHub и отправь ссылку в OTUS личный кабинет.
+                </div>
+                <div class="instructions">
+                    <strong>Вариант 2: ZIP архив</strong><br>
+                    Сожми папку <code>OTUS-CSharp-Basic-Homework</code> и загрузи ZIP в личный кабинет OTUS.
+                </div>
+                <div class="alert success">
+                    <strong>✅ Успех!</strong> Теперь у тебя есть полная готовая структура проекта для отправки на проверку.
+                </div>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="alert('✅ Все инструкции и коды готовы! Используй их для создания проекта в Visual Studio.')">✅ Я всё понял</button>
+                <button class="btn btn-secondary" onclick="window.print()">🖨️ Печать инструкции</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function copyText(elementId) {
+            const textarea = document.getElementById(elementId);
+            textarea.select();
+            document.execCommand('copy');
+            
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✅ Скопировано!';
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 2000);
+        }
+        
+        function copyCode(selector) {
+            const code = document.querySelector(selector).textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('✅ Код скопирован!');
+            });
+        }
+    </script>
+</body>
+</html>
